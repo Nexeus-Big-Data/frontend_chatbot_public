@@ -81,11 +81,17 @@ function agregar_chatbot() {
     <div id="chat-widget">
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
         <div id="chat-box">
+            <!-- Aqui van los mensajes de ejemplo -->
+            <button type="button" id="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
+            <button type="button" id="help-button" onclick="sendMessage('Catalogo de productos')">Catalogo de productos</button>
+
+
             <div id="chat-content"></div>
             <input type="text" id="user-input" placeholder="Escribe aquí..." />
             <button onclick="sendMessage()">Enviar</button>
         </div>
     </div>
+
     <script>
         let step = 0;
         const BACKEND_URL = "https://chatbot-api.onrender.com";
@@ -100,21 +106,23 @@ function agregar_chatbot() {
             chatHeader.innerHTML = "💡 ¿Sabes cuánto podrías ahorrar con IA? Descúbrelo en segundos";
         }, 5000);
 
-        async function sendMessage() {
+        async function sendMessage(message = null) {
             let input = document.getElementById("user-input");
-            let message = input.value.trim();
-            if (message === "") return;
-
-            input.value = "";
             let chatContent = document.getElementById("chat-content");
 
-            chatContent.innerHTML += `<p><b>Tú:</b> ${message}</p>`;
+            // Si el mensaje es null, tomar el valor del input
+            let finalMessage = message ? message : input.value.trim();
+            if (finalMessage === "") return; // No enviar mensajes vacíos
+
+            input.value = ""; // Limpiar input solo si el mensaje vino de ahí
+
+            chatContent.innerHTML += `<p><b>Tú:</b> ${finalMessage}</p>`;
 
             try {
                 let response = await fetch(new URL("/chat", BACKEND_URL), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ step: step, answer: message })
+                    body: JSON.stringify({ step: step, answer: finalMessage })
                 });
 
                 let data = await response.json();
@@ -132,6 +140,7 @@ function agregar_chatbot() {
             }
         }
     </script>
+
     <?php
-}
+
 add_action('wp_footer', 'agregar_chatbot');
