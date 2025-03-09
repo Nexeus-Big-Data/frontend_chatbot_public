@@ -46,6 +46,20 @@ function agregar_chatbot() {
                 document.getElementById("chat-content").innerHTML += `<a href="http://tu-servidor-fastapi.com/generate_pdf" target="_blank">Descargar presupuesto</a>`;
             }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const userInput = document.getElementById("user-input")
+
+            if (userInput){
+                userInput.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        sendMessage();
+                    }
+                });
+            } else {
+                console.error("Error: No se encontró el elemento #user-input.");
+            }
+        });
     </script>
     <?php
 }
