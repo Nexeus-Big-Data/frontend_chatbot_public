@@ -131,6 +131,20 @@ function agregar_chatbot() {
                 chatContent.innerHTML += `<p><b>Chatbot:</b> Error en la comunicación con el servidor.</p>`;
             }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const userInput = document.getElementById("user-input")
+
+            if (userInput){
+                userInput.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        sendMessage();
+                    }
+                });
+            } else {
+                console.error("Error: No se encontró el elemento #user-input.");
+            }
+        });
     </script>
     <?php
 }
