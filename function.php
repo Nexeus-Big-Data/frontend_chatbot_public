@@ -3,6 +3,7 @@
 function agregar_chatbot() {
     ?>
     <link rel="stylesheet" type="text/css" href="chatbot.css">
+
     <div id="chat-widget">
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
         <div id="chat-box">
@@ -42,7 +43,6 @@ function agregar_chatbot() {
                 });
 
                 let data = await response.json();
-
                 if (data.step !== -1) {
                     chatContent.innerHTML += `<p><b>Chatbot:</b> ${data.question}</p>`;
                     step = data.step;
@@ -55,8 +55,21 @@ function agregar_chatbot() {
                 chatContent.innerHTML += `<p><b>Chatbot:</b> Error en la comunicación con el servidor.</p>`;
             }
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const userInput = document.getElementById("user-input")
+
+            if (userInput){
+                userInput.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        sendMessage();
+                    }
+                });
+            } else {
+                console.error("Error: No se encontró el elemento #user-input.");
+            }
+        });
     </script>
     <?php
 }
 ?>
-add_action('wp_footer', 'agregar_chatbot');
