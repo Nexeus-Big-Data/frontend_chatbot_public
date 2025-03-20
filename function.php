@@ -94,7 +94,7 @@ function agregar_chatbot() {
 
     <script>
         let step = 0;
-        const BACKEND_URL = "https://chatbot-api.onrender.com";
+        const BACKEND_URL = "https://backend-chatbot-public-1-5pjk.onrender.com/chat";
 
         function toggleChat() {
             let chatBox = document.getElementById("chat-box");
