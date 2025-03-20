@@ -2,7 +2,7 @@
 // FUNCIÓN CHATBOT FLOTANTE CON CONEXIÓN A BACKEND EN RENDER
 function agregar_chatbot() {
     ?>
-    <link rel="stylesheet" type="text/css" href="chatbot.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 
     <div id="chat-widget">
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
@@ -14,7 +14,7 @@ function agregar_chatbot() {
     </div>
     <script>
         let step = 0;
-        const BACKEND_URL = "https://chatbot-api.onrender.com";
+        const BACKEND_URL = "https://backend-chatbot-public-1-5pjk.onrender.com/chat";
 
         function toggleChat() {
             let chatBox = document.getElementById("chat-box");
