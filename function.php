@@ -1,6 +1,7 @@
 // FUNCIÓN CHATBOT FLOTANTE CON CONEXIÓN A BACKEND EN RENDER
 function agregar_chatbot() {
     ?>
+
     <style>
         #chat-widget {
             position: fixed;
@@ -31,7 +32,7 @@ function agregar_chatbot() {
 
         #chat-box {
             display: none;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(25, 25, 25, 0.9);
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
@@ -77,6 +78,7 @@ function agregar_chatbot() {
                 box-shadow: 0 0 20px rgba(0, 195, 255, 0.9);
             }
         }
+
     </style>
     <div id="chat-widget">
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
