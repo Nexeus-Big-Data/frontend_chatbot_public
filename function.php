@@ -81,10 +81,9 @@ function agregar_chatbot() {
     <div id="chat-widget">
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
         <div id="chat-box">
-            <!-- Aqui van los mensajes de ejemplo -->
-            <button type="button" id="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
-            <button type="button" id="help-button" onclick="sendMessage('Catalogo de productos')">Catalogo de productos</button>
-
+            <!-- Botones de ayuda -->
+            <button type="button" class="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
+            <button type="button" class="help-button" onclick="sendMessage('Catalogo de productos')">Catálogo de productos</button>
 
             <div id="chat-content"></div>
             <input type="text" id="user-input" placeholder="Escribe aquí..." />
@@ -94,7 +93,7 @@ function agregar_chatbot() {
 
     <script>
         let step = 0;
-        const BACKEND_URL = "https://backend-chatbot-public-1-5pjk.onrender.com/chat";
+        const BACKEND_URL = "https://backend-chatbot-public-1-5pjk.onrender.com";
 
         function toggleChat() {
             let chatBox = document.getElementById("chat-box");
@@ -116,10 +115,15 @@ function agregar_chatbot() {
 
             input.value = ""; // Limpiar input solo si el mensaje vino de ahí
 
-            chatContent.innerHTML += `<p><b>Tú:</b> ${finalMessage}</p>`;
+            // Crear y añadir mensaje del usuario
+            let userMessage = document.createElement("p");
+            userMessage.innerHTML = `<b>Tú:</b> ` + finalMessage;
+            chatContent.appendChild(userMessage);
+
+            chatContent.scrollTop = chatContent.scrollHeight;
 
             try {
-                let response = await fetch(new URL("/chat", BACKEND_URL), {
+                let response = await fetch(`${BACKEND_URL}/chat`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ step: step, answer: finalMessage })
@@ -127,20 +131,26 @@ function agregar_chatbot() {
 
                 let data = await response.json();
 
-                if (data.step !== -1) {
-                    chatContent.innerHTML += `<p><b>Chatbot:</b> ${data.question}</p>`;
-                    step = data.step;
-                } else {
-                    chatContent.innerHTML += `<p><b>Chatbot:</b> ${data.message}</p>`;
-                    chatContent.innerHTML += `<a href="${BACKEND_URL}/generate_pdf" target="_blank">Descargar presupuesto</a>`;
+                let botMessage = document.createElement("p");
+                botMessage.innerHTML = `<b>Chatbot:</b> ` + (data.step !== -1 ? data.question : data.message);
+                chatContent.appendChild(botMessage);
+
+                if (data.step === -1) {
+                    let downloadLink = document.createElement("a");
+                    downloadLink.href = `${BACKEND_URL}/generate_pdf`;
+                    downloadLink.target = "_blank";
+                    downloadLink.innerText = "Descargar presupuesto";
+                    chatContent.appendChild(downloadLink);
                 }
+
+                chatContent.scrollTop = chatContent.scrollHeight;
+                step = data.step;
             } catch (error) {
                 console.error("Error al conectar con el backend:", error);
                 chatContent.innerHTML += `<p><b>Chatbot:</b> Error en la comunicación con el servidor.</p>`;
             }
         }
     </script>
-
     <?php
-
+}
 add_action('wp_footer', 'agregar_chatbot');
