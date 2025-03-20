@@ -151,6 +151,4 @@ function agregar_chatbot() {
             }
         }
     </script>
-    <?php
 }
-add_action('wp_footer', 'agregar_chatbot');
