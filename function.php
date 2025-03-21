@@ -128,13 +128,13 @@ function agregar_chatbot() {
                 let response = await fetch(`${BACKEND_URL}/chat`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ step: step, answer: finalMessage })
+                    body: JSON.stringify({ step: step, message: finalMessage })
                 });
 
                 let data = await response.json();
 
                 let botMessage = document.createElement("p");
-                botMessage.innerHTML = `<b>Chatbot:</b> ` + (data.step !== -1 ? data.question : data.message);
+                botMessage.innerHTML = `<b>Chatbot:</b> ` + (data.response);
                 chatContent.appendChild(botMessage);
 
                 if (data.step === -1) {
