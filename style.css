@@ -2,16 +2,18 @@
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 320px;
-    height: 400px;
+    width: 370px;
+    height: 290px;
     font-family: Arial, sans-serif;
     z-index: 1000;
     resize: both;
     overflow: hidden;
-    min-width: 250px;
-    min-height: 350px;
-    max-width: 480px;
-    max-height: 600px;
+    min-width: 370px;
+    min-height: 290px;
+    max-width: 600px;
+    max-height: 720px;
+    display: flex;
+    flex-direction: column;
 }
 
 #chat-header {
@@ -34,12 +36,13 @@
 
 #chat-box {
     display: none;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(25, 25, 25, 0.9);
     backdrop-filter: blur(8px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     padding: 15px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
     overflow-y: auto;
     height: calc(100% - 50px);
 }
@@ -48,6 +51,12 @@
     padding: 5px;
     max-height: calc(100% - 120px);
     overflow-y: auto;
+}
+
+#chat-input-container {
+    display: flex;
+    padding: 10px;
+    gap: 5px;
 }
 
 input {
@@ -74,7 +83,7 @@ button {
 button:hover {
     background: #0056b3;
 }
-
+/* Animación "Wave" - Brillo Pulsante */
 @keyframes waveEffect {
     0% {
         box-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
