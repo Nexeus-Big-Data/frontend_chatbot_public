@@ -7,12 +7,16 @@ function agregar_chatbot() {
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
         <div id="chat-box">
             <!-- Botones de ayuda -->
-            <button type="button" class="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
-            <button type="button" class="help-button" onclick="sendMessage('Catalogo de productos')">Catálogo de productos</button>
-
+             <div id="chat-buttons-container">
+                <button type="button" class="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
+                <button type="button" class="help-button" onclick="sendMessage('Catalogo de productos')">Catálogo de productos</button>
+            </div>
             <div id="chat-content"></div>
-            <input type="text" id="user-input" placeholder="Escribe aquí..." />
-            <button onclick="sendMessage()">Enviar</button>
+            <!-- Contenedor del input y botón de enviar -->
+            <div id="chat-input-container">
+                <input type="text" id="user-input" placeholder="Escribe aquí..." />
+                <button onclick="sendMessage()">Enviar</button>
+            </div>
         </div>
     </div>
 
