@@ -7,12 +7,18 @@ function agregar_chatbot() {
         <div id="chat-header" onclick="toggleChat()">💡 Chatbot</div>
         <div id="chat-box">
             <!-- Botones de ayuda -->
-            <button type="button" class="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
-            <button type="button" class="help-button" onclick="sendMessage('Catalogo de productos')">Catálogo de productos</button>
-
+             <div id="chat-buttons-container">
+                <button type="button" class="help-button" onclick="sendMessage('Sobre Nexeus')">Sobre Nexeus</button>
+                <button type="button" class="help-button" onclick="sendMessage('Catalogo de productos')">Catálogo de productos</button>
+            </div>
             <div id="chat-content"></div>
-            <input type="text" id="user-input" placeholder="Escribe aquí..." />
-            <button onclick="sendMessage()">Enviar</button>
+            <!-- Contenedor del input y botón de enviar -->
+            <div id="chat-input-container">
+                <input type="text" id="user-input" placeholder="Escribe aquí..." />
+                <button onclick="sendMessage()">Enviar</button>
+                <!-- Contenedor del mensaje de carga -->
+                <div id="loading-message">Generando respuesta... Espere un momento</div>
+            </div>
         </div>
     </div>
 
@@ -33,6 +39,7 @@ function agregar_chatbot() {
         async function sendMessage(message = null) {
             let input = document.getElementById("user-input");
             let chatContent = document.getElementById("chat-content");
+            let loadingMessage = document.getElementById("loading-message"); /*Constante que contiene el id del css para el mensaje de carga*/
 
             // Si el mensaje es null, tomar el valor del input
             let finalMessage = message ? message : input.value.trim();
@@ -46,6 +53,8 @@ function agregar_chatbot() {
             chatContent.appendChild(userMessage);
 
             chatContent.scrollTop = chatContent.scrollHeight;
+            // Mostrar mensaje de carga
+            loadingMessage.style.display = "block";
 
             try {
                 let response = await fetch(`${BACKEND_URL}/chat`, {
@@ -55,6 +64,8 @@ function agregar_chatbot() {
                 });
 
                 let data = await response.json();
+                // Ocultar mensaje de carga después de recibir respuesta
+                loadingMessage.style.display = "none";
 
                 let botMessage = document.createElement("p");
                 botMessage.innerHTML = `<b>Chatbot:</b> ` + (data.response);
@@ -73,6 +84,8 @@ function agregar_chatbot() {
             } catch (error) {
                 console.error("Error al conectar con el backend:", error);
                 chatContent.innerHTML += `<p><b>Chatbot:</b> Error en la comunicación con el servidor.</p>`;
+                // Ocultar mensaje de carga en caso de error
+                loadingMessage.style.display = "none";
             }
         }
         /* Funcionalidad enter */
